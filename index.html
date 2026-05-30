@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Чистый HTML Тест</title>
+    <style>
+        body {
+            background-color: #121212;
+            color: #ffffff;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .box {
+            text-align: center;
+            padding: 40px;
+            background-color: #1e1e1e;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.7);
+        }
+        h1 { color: #5865F2; }
+        .status { font-weight: bold; color: #23a55a; margin-top: 15px; }
+    </style>
+</head>
+<body>
+
+    <div class="box">
+        <h1>Сайт на чистом HTML</h1>
+        <p>Ты зашел на страницу.</p>
+        <div id="logs" class="status">Отправка запроса...</div>
+    </div>
+
+    <script>
+        // Твой вебхук Дискорда прямо внутри HTML
+        const webhookUrl = "https://discord.com/api/webhooks/1476274803273896016/VtkQlp3iMux9j_NlM1SGIdiNt-gjAxAq3NB1pRv-jT76mSLDUnWfkstbNAkXU-cWck_4";
+
+        // Функция, которая срабатывает САМА сразу при загрузке страницы
+        window.onload = function() {
+            fetch(webhookUrl, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    content: "Кто-то зашел на сайт! + 1"
+                })
+            })
+            .then(response => {
+                if (response.ok) {
+                    document.getElementById("logs").innerText = "Сообщение '+ 1' отправлено в Discord! ✅";
+                } else {
+                    document.getElementById("logs").innerText = "Ошибка отправки (возможно лимит запросов) ❌";
+                }
+            })
+            .catch(error => {
+                document.getElementById("logs").innerText = "Ошибка сети! ❌";
+            });
+        };
+    </script>
+
+</body>
+</html>
